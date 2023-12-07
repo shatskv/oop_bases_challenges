@@ -6,7 +6,7 @@
 
 
 class User:
-    def __init__(self, name: str, username: str, age: int, phone: str):
+    def __init__(self, name: str, username: str, age: int, phone: str) -> None:
         self.name = name
         self.username = username
         self.age = age
