@@ -11,20 +11,54 @@
 """
 
 
+class ErrorSendMixin:
+    def send_error(self) -> str:
+        print("Такого пользователя не существует.")
+
+
 class UserManager:
-    def __init__(self):
+    def __init__(self) -> None:
         self.usernames = []
 
-    def add_user(self, username):
+    def add_user(self, username: str) -> None:
         self.usernames.append(username)
 
-    def get_users(self):
+    def get_users(self) -> list[str]:
         return self.usernames
 
 
-# код писать тут
+class AdminManager(UserManager, ErrorSendMixin):
+    def ban_username(self, username: str) -> None:
+        try:
+            self.usernames.remove(username)
+        except ValueError:
+            self.send_error()
+
+
+class SuperAdminManager(AdminManager, ErrorSendMixin):
+    def ban_all_users(self) -> None:
+        self.usernames.clear()
 
 
 if __name__ == '__main__':
-    pass  # код писать тут
-
+    usernames = ['daro', 'garo', 'malo', 'dera', 'fola']
+    print('\nUserManager\n')
+    user_manager = UserManager()
+    user_manager.usernames = usernames.copy()
+    user_manager.add_user('new_user')
+    print(user_manager.get_users())
+    print('\nAdminManager\n')
+    admin_manager = AdminManager()
+    admin_manager.usernames = usernames.copy()
+    admin_manager.add_user('new_user_2')
+    admin_manager.ban_username('malo')
+    print(admin_manager.get_users())
+    print('\nSuperAdminManager\n')
+    super_manager = SuperAdminManager()
+    super_manager.usernames = usernames.copy()
+    super_manager.add_user('new_user_2')
+    super_manager.ban_username('malo')
+    super_manager.ban_username('malo222')
+    print(super_manager.get_users())
+    super_manager.ban_all_users()
+    print(super_manager.get_users())

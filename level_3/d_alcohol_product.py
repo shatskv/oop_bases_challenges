@@ -26,8 +26,21 @@ class Product:
 
 
 class AlcoholProduct(Product):
-    pass  # код писать тут
+    available_between = [5, 23]
+
+    def is_available(self):
+        hour_now = datetime.now().hour
+        return super().is_available() and hour_now > self.available_between[0] and hour_now < self.available_between[1]
 
 
 if __name__ == '__main__':
-    pass  # код писать тут
+    product_data = {'title': 'Водка', 'price': 260, "stock_quantity": 10}
+    discount = 20
+    product = Product(**product_data)
+    print('\nProduct\n')
+    print(product.get_discounted_price(discount))
+    print(product.is_available())
+    product = AlcoholProduct(**product_data)
+    print('\nAlcoholProduct\n')
+    print(product.get_discounted_price(discount))
+    print(product.is_available())
