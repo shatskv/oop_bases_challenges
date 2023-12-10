@@ -34,7 +34,11 @@ class BaseHeadersMixin:
         return self.generate_base_headers()
 
 
-# код писать тут
+class CustomResponse(BaseResponse, BaseHeadersMixin):
+    def generate_headers(self):
+        return super().generate_headers() | {'Content-Length': self.get_byte_content_length()}
+
 
 if __name__ == '__main__':
-    pass  # код писать тут
+    response = CustomResponse('https://api.directory.yandex.net/users/?page=3&per_page=10>')
+    print(response.generate_headers())
