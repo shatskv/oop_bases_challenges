@@ -10,18 +10,30 @@
 
 
 class TextProcessor:
-    def __init__(self, text):
+    def __init__(self, text: str) -> None:
         self.text = text
 
-    def to_upper(self):
+    def to_upper(self) -> str:
         return self.text.upper()
 
-    def summarize(self):
+    def summarize(self) -> str:
         return f'Total text length: {len(self.text)}'
+    
 
-
-# код писать тут
+class AdvancedTextProcessor(TextProcessor):
+    def summarize(self) -> str:
+        return f'{super().summarize()}, total number of words in the text: {len(self.text.split())}'
 
 
 if __name__ == '__main__':
-    pass  # код писать тут
+    text = """Такие термины как "протокол итератора" или "протокол дескрипторов" уже привычны и используются давно.
+Теперь можно описывать протоколы в виде кода и проверять их соответствие на этапе статического анализа.
+"""
+    text_processor = TextProcessor(text)
+    print('\nTextProcessor\n')
+    print(text_processor.to_upper())
+    print(text_processor.summarize())
+    adv_text_processor = AdvancedTextProcessor(text)
+    print('\nAdvancedTextProcessor\n')
+    print(adv_text_processor.to_upper())
+    print(adv_text_processor.summarize())
