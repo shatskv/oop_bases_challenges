@@ -12,22 +12,22 @@ import json
 
 
 class Logger:
-    max_log_size = 1000
+    max_log_size = 10
 
-    def __init__(self, data: dict, message: str):
+    def __init__(self, data: dict, message: str) -> None:
         self.data = data
         self.message = message
 
-    def is_log_size_valid(self):
+    def is_log_size_valid(self) -> bool:
         return self.get_data_size() <= self.max_log_size
 
-    def get_data_size(self):
+    def get_data_size(self) -> str:
         serialized_data = json.dumps(self.data)
         return len(serialized_data.encode('utf-8'))
 
 
 class GoogleLogger(Logger):
-    def is_valid(self):
+    def is_valid(self) -> bool:
         return self.is_log_size_valid() and bool(self.message)
 
 

@@ -7,17 +7,22 @@
        то что вы ожидаете.
 """
 
-EBAY_TITLE = 'eBay'
-
 
 class EbayProduct:
-    def __init__(self, title: str, price: float):
+    ebay_title = 'eBay'
+
+    def __init__(self, title: str, price: float) -> None:
         self.title = title
         self.price = price
 
-    def get_product_info(self):
-        return f'Product {self.title} with price {self.price} from {EBAY_TITLE} marketplace'
+    def get_product_info(self) -> str:
+        return f'Product {self.title} with price {self.price} from {self.ebay_title} marketplace'
 
 
 if __name__ == '__main__':
-    pass
+    product_one = EbayProduct('Утюг', 200)
+    product_two = EbayProduct('Ковер', 300)
+    print(product_one.get_product_info(), '\n', product_one.get_product_info(), '\n', sep='')
+
+    EbayProduct.ebay_title = 'new_title_ebay'
+    print(product_one.get_product_info(), '\n', product_two.get_product_info(), '\n', sep='')

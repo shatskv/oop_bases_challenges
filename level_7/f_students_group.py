@@ -11,9 +11,13 @@
 
 
 class StudentGroup:
-    def __init__(self, group_number: int, grades: list[int]):
+    def __init__(self, group_number: int, grades: list[int]) -> None:
         self.group_number = group_number
         self.grades = grades
+
+    def __add__(self, group: 'StudentGroup') -> int:
+        sum_ = sum(self.grades) + sum(group.grades)
+        return sum_
 
 
 if __name__ == '__main__':
