@@ -33,5 +33,5 @@ class AuthorizationForm(AuthorizationFormMixin, Form):
 if __name__ == '__main__':
     auth_form = AuthorizationForm('vader', '1234567891')
     print(auth_form.valid_form())
-    auth_form.username = 'BobTheBuilder'
+    auth_form = AuthorizationForm('BobTheBuilder', '1234567891')
     print(auth_form.valid_form())

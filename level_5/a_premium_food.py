@@ -27,12 +27,14 @@ class FoodProductMixin:
 
 class FoodProduct(Product, FoodProductMixin):
     def get_product_info(self):
-        return f"{super().get_product_info()}{' (Premium)' if self.is_premium_food() else ''}"
+        info_part = super().get_product_info()
+        premium_part = ' (Premium)' if self.is_premium_food() else ''
+        return f'{info_part}{premium_part}'
 
 
 if __name__ == '__main__':
     print('\nNormal product:\n')
-    food_product = FoodProduct('Молоко', 9)
+    food_product = Product('Молоко', 9)
     print(food_product.get_product_info())
 
     print('\nPremium product:\n')

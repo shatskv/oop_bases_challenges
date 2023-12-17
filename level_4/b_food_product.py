@@ -14,24 +14,27 @@ from datetime import datetime, timedelta
 
 
 class Product:
-    def __init__(self, title: str, quantity: int): 
+    def __init__(self, title: str, quantity: int) -> None: 
         self.title = title
         self.quantity = quantity
 
-    def get_full_info(self):
+    def get_full_info(self) -> str:
         return f'Product {self.title}, {self.quantity} in stock.'
 
-    def is_available(self):
+    def is_available(self) -> bool:
         return self.quantity > 0
 
 
 class FoodProduct(Product):
-    def __init__(self, title: str, quantity: int, expiration_date: datetime):
+    def __init__(self, title: str, quantity: int, expiration_date: datetime) -> None:
         super().__init__(title, quantity)
         self.expiration_date = expiration_date
 
-    def is_available(self):
+    def is_available(self) -> bool:
         return super().is_available() and self.expiration_date > datetime.now()
+    
+    def get_full_info(self) -> str:
+        return super().get_full_info() + f' Expiretion date: {self.expiration_date}'
 
 
 if __name__ == '__main__':
@@ -44,5 +47,6 @@ if __name__ == '__main__':
     food_product = FoodProduct('Бойлоко', 5, datetime_now + timedelta(days=1))
     print(food_product.get_full_info())
     print(food_product.is_available())
-    food_product.expiration_date = datetime_now - timedelta(days=2)
-    print(food_product.is_available())
+    food_product_two = FoodProduct('Бойлоко', 5, datetime_now - timedelta(days=2))
+    print(food_product_two.is_available())
+    print(food_product_two.get_full_info())
