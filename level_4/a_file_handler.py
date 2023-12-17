@@ -27,13 +27,13 @@ class FileHandler:
 
 
 class JSONHandler(FileHandler):
-    def read_json(self) -> dict:
+    def read(self) -> dict:
         with open(self.filename, 'r') as file:
             return json.load(file)
 
 
 class CSVHandler(FileHandler):
-    def read_csv(self) -> list[dict]:
+    def read(self) -> list[dict]:
         with open(self.filename, 'r') as file:
             return list(csv.DictReader(file, delimiter=','))
 
@@ -43,6 +43,6 @@ if __name__ == '__main__':
     file_handler = FileHandler(os.path.join(data_path, 'text.txt'))
     print(file_handler.read())
     json_handler = JSONHandler(os.path.join(data_path, 'recipes.json'))
-    print(json_handler.read_json())
+    print(json_handler.read())
     csv_handler = CSVHandler(os.path.join(data_path, 'user_info.csv'))
-    print(csv_handler.read_csv())
+    print(csv_handler.read())

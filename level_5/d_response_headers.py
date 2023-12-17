@@ -27,7 +27,7 @@ class BaseHeadersMixin:
             'user-agent': (
                 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) '
                 'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36'
-            ),
+            )
         }
 
     def generate_headers(self):
@@ -36,9 +36,11 @@ class BaseHeadersMixin:
 
 class CustomResponse(BaseResponse, BaseHeadersMixin):
     def generate_headers(self):
-        return super().generate_headers() | {'Content-Length': self.get_byte_content_length()}
+        headers = super().generate_headers()
+        headers['Content-Length'] =  self.get_byte_content_length()
+        return headers
 
 
 if __name__ == '__main__':
-    response = CustomResponse('https://api.directory.yandex.net/users/?page=3&per_page=10>')
+    response = CustomResponse('CVLVL:FLdf;ldfdl;dfl;df;l;l4l343;34')
     print(response.generate_headers())
