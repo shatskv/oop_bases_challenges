@@ -10,24 +10,43 @@
        меньше чем текущая дата - то is_available должен возвращать False. Используйте super() для этого.
     3. Создайте экземпляры каждого из двух классов и вызовите у них все доступные методы
 """
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class Product:
-    def __init__(self, title, quantity):
+    def __init__(self, title: str, quantity: int) -> None: 
         self.title = title
         self.quantity = quantity
 
-    def get_full_info(self):
+    def get_full_info(self) -> str:
         return f'Product {self.title}, {self.quantity} in stock.'
 
-    def is_available(self):
+    def is_available(self) -> bool:
         return self.quantity > 0
 
 
 class FoodProduct(Product):
-    pass  # код писать тут
+    def __init__(self, title: str, quantity: int, expiration_date: datetime) -> None:
+        super().__init__(title, quantity)
+        self.expiration_date = expiration_date
+
+    def is_available(self) -> bool:
+        return super().is_available() and self.expiration_date > datetime.now()
+    
+    def get_full_info(self) -> str:
+        return super().get_full_info() + f' Expiretion date: {self.expiration_date}'
 
 
 if __name__ == '__main__':
-    pass  # код писать тут
+    print('\nProduct\n')
+    product = Product('Молоко', 5)
+    print(product.get_full_info())
+    print(product.is_available())
+    print('\nFoodProduct\n')
+    datetime_now = datetime.now()
+    food_product = FoodProduct('Бойлоко', 5, datetime_now + timedelta(days=1))
+    print(food_product.get_full_info())
+    print(food_product.is_available())
+    food_product_two = FoodProduct('Бойлоко', 5, datetime_now - timedelta(days=2))
+    print(food_product_two.is_available())
+    print(food_product_two.get_full_info())
