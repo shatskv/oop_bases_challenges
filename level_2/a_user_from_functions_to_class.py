@@ -12,8 +12,10 @@ class User:
         self.user_id = user_id
         self.name = name
     
-    def make_username_capitalized(self) -> str:
+    @property
+    def capitalized(self) -> str:
         return self.username.capitalize() 
     
-    def generate_short_user_description(self) -> str:
-        return f'User with id {self.user_id} has {self.username} username and {self.name} name'
+    @property
+    def description(self) -> str:
+        return f'{self.user_id} has {self.username} username and {self.name} name'
