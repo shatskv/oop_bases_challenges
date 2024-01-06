@@ -12,7 +12,8 @@
 
 
 class ErrorSendMixin:
-    def send_error(self) -> str:
+    @staticmethod
+    def send_error() -> None:
         print("Такого пользователя не существует.")
 
 
@@ -35,7 +36,7 @@ class AdminManager(UserManager, ErrorSendMixin):
             self.send_error()
 
 
-class SuperAdminManager(AdminManager, ErrorSendMixin):
+class SuperAdminManager(AdminManager):
     def ban_all_users(self) -> None:
         self.usernames.clear()
 
