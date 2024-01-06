@@ -12,7 +12,7 @@ import json
 
 
 class Logger:
-    max_log_size = 10
+    max_log_size = 1000
 
     def __init__(self, data: dict, message: str) -> None:
         self.data = data
@@ -27,13 +27,25 @@ class Logger:
 
 
 class GoogleLogger(Logger):
+    def __init__(self, data, message):
+        super().__init__(data, message)
+        self.max_log_size = 30
+
     def is_valid(self) -> bool:
         return self.is_log_size_valid() and bool(self.message)
 
 
 if __name__ == '__main__':
+    print('Google_logger:')
     google_logger_instance = GoogleLogger(
         data={'user_id': 1, 'user_email': 'learn_python.gmail.com'},
-        message='User registered',
-    )
+        message='User registered'
+        )
     print(google_logger_instance.is_valid())
+    print(google_logger_instance.max_log_size)
+
+    print('\nParent logger:')
+    logger = Logger(data={'user_id': 1, 'user_email': 'learn_python.gmail.com'}, 
+                    message='User registered')
+    print(logger.max_log_size)
+

@@ -8,6 +8,7 @@
        оценок двух инстансов.
     3. Запустите текущий код и убедитесь, что теперь мы получаем число в выводе, вместо ошибки.
 """
+from typing import Self
 
 
 class StudentGroup:
@@ -15,9 +16,8 @@ class StudentGroup:
         self.group_number = group_number
         self.grades = grades
 
-    def __add__(self, group: 'StudentGroup') -> int:
-        sum_ = sum(self.grades) + sum(group.grades)
-        return sum_
+    def __add__(self, group: Self) -> int:
+        return sum(self.grades) + sum(group.grades)
 
 
 if __name__ == '__main__':
