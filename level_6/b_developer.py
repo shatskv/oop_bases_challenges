@@ -9,35 +9,47 @@
 
 
 class Employee:
-    def __init__(self, name: str, surname: str, age: int, salary: float):
+    def __init__(self, name: str, surname: str, age: int, salary: float) -> None:
         self.name = name
         self.surname = surname
         self.age = age
         self.salary = salary
 
-    def get_info(self):
+    def get_info(self) -> str:
         return f'{self.name} with salary {self.salary}'
 
 
 class ItDepartmentEmployee(Employee):
-    def __init__(self, name: str, surname: str, age: int, salary: float):
+    def __init__(self, name: str, surname: str, age: int, salary: float) -> None:
         super().__init__(name, surname, age, salary)
         self.salary *= 2
 
 
 class AdminMixin:
-    def increase_salary(self, employee: Employee, amount: float):
+    def increase_salary(self, employee: Employee, amount: float) -> None:
         employee.salary += amount
 
 
 class SuperAdminMixin(AdminMixin):
-    def decrease_salary(self, employee: Employee, amount: float):
+    def decrease_salary(self, employee: Employee, amount: float) -> None:
         employee.salary -= amount
 
 
-# код писать тут
+class Developer(ItDepartmentEmployee, SuperAdminMixin):
+    def __init__(self, name: str, surname: str, age: int, salary: float, language: str) -> None:
+        super().__init__(name, surname, age, salary)
+        self.language = language
+
+    def get_info(self) -> str:
+        info = super().get_info()
+        language = self.language
+        return f'{info} language: {language}'
 
 
 if __name__ == '__main__':
-    pass  # код писать тут
-
+    developer = Developer('Вася', 'Пупкин', 48, 2000, 'Delphi')
+    print(developer.get_info())
+    developer.increase_salary(developer, 200)
+    print(developer.salary)
+    developer.decrease_salary(developer, 300)
+    print(developer.salary)

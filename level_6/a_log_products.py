@@ -10,33 +10,59 @@
 """
 
 
-class Product:
-    def __init__(self, title: str, price: float):
+class PrintLoggerMixin:
+    @staticmethod
+    def log(*message):
+        print(*message)
+
+
+class Product(PrintLoggerMixin):
+    def __init__(self, title: str, price: float) -> None:
         self.title = title
         self.price = price
+        self.log(self, 'init instance')
 
-    def get_info(self):
-        return f'Product {self.title} with price {self.price}'
+    def get_info(self) -> str:
+        info = f'Product {self.title} with price {self.price}'
+        self.log('get_info:', info)
+        return info
 
 
-class PremiumProduct(Product):
-    def increase_price(self):
+class PremiumProduct(Product, PrintLoggerMixin):
+    def increase_price(self) -> None:
         self.price *= 1.2
+        self.log('increase_price:', self.price)
 
-    def get_info(self):
+    def get_info(self) -> str:
         base_info = super().get_info()
+        info = f'{base_info} (Premium)'
+        self.log('get_info:', info)
         return f'{base_info} (Premium)'
 
 
-class DiscountedProduct(Product):
-    def decrease_price(self):
+class DiscountedProduct(Product, PrintLoggerMixin):
+    def decrease_price(self) -> None:
         self.price /= 1.2
+        self.log('decrease_price:', self.price)
 
-    def get_info(self):
+    def get_info(self) -> str:
         base_info = super().get_info()
-        return f'{base_info} (Discounted)'
+        info = f'{base_info} (Discounted)'
+        self.log('get_info:', info)
+        return info
 
 
 if __name__ == '__main__':
-    pass
+    print('Product:\n')
+    product = Product('Утюг', 2500)
+    print(product.get_info())
 
+    print('PremiumProduct:\n')
+    product_two = PremiumProduct('Чайник', 1500)
+    product_two.increase_price()
+    print(product_two.get_info())
+
+    print('DiscountedProduct:\n')
+    product_three = DiscountedProduct('Стол', 2000)
+    product_three.decrease_price()
+    print(product_three.get_info())
