@@ -27,9 +27,7 @@ class Logger:
 
 
 class GoogleLogger(Logger):
-    def __init__(self, data, message):
-        super().__init__(data, message)
-        self.max_log_size = 30
+    max_log_size = 30
 
     def is_valid(self) -> bool:
         return self.is_log_size_valid() and bool(self.message)
